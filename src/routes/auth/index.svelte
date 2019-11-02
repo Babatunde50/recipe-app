@@ -1,4 +1,5 @@
 <script>
+  import { goto } from '@sapper/app';
   import { validateEmail, validatePassword } from "../../helpers/validate";
   import { handleLogin, handleError } from "../../helpers/auth";
   import { postData } from "../../helpers/http";
@@ -28,6 +29,7 @@
       const user = await postData(url, userData);
       handleLogin(user);
       console.log(user)
+      goto('/recipes')
     } catch (error) {
       console.log(error)
      console.log(handleError(error));

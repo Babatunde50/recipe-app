@@ -1,9 +1,8 @@
 <script>
     export let recipe;
-
 </script>
 
-<a style="cursor: pointer;" href="/" class="list-group-item clearfix">
+<span style="cursor: pointer;" class="list-group-item clearfix" on:click>
   <div class="pull-left">
     <h4 class="list-group-item-heading"> {recipe.name} </h4>
     <p class="list-group-item-text"> {recipe.description} </p>
@@ -11,4 +10,4 @@
   <span class="pull-right">
     <img src={recipe.imagePath} alt="" class="img-responsive" style="max-height: 50px;" />
   </span>
-</a>
+</span>

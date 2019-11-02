@@ -2,12 +2,20 @@
     import { onMount } from 'svelte'
     
     import RecipeListItem from '../../components/RecipeListItem.svelte';
+    import RecipeDetails from '../../components/RecipeDetails.svelte';
 	import { autoLogin } from '../../helpers/auth'
 
 	onMount(() => {
 		autoLogin();
 	})
 
+    let detailsShown = false;
+    let recipe;
+
+    function showDetails(event) {
+        detailsShown = true;
+        recipe = event.detail;
+    }
     
 </script>
 
@@ -18,7 +26,11 @@
 
 <div class="row">
     <div class="col-md-5">
-        <RecipeListItem />
+        <RecipeListItem on:showdetails={showDetails} />
     </div>
-    
+    {#if detailsShown}
+        <div class="col-md-7">
+            <RecipeDetails {recipe} />
+        </div>
+    {/if}
 </div>
