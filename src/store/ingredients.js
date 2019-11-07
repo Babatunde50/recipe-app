@@ -13,13 +13,17 @@ function ingredientsStore() {
 		subscribe,
         addIngredient: (name, amount) => update( ingredients => {
             const ingredient = {
-                name,
+                name, 
                 amount,
-                id: Math.random().toString()
+                id: Math.random.toString()
             }
-            const updatedIngredient = [...ingredients, ingredient ];
+            const updatedIngredient = [...ingredients, ingredient]
             return updatedIngredient
-        } )
+        } ),
+        deleteIngredient: (id) => update(ingredients => {
+            const updatedIngredient = ingredients.filter(ing => ing.id !== id);
+            return updatedIngredient;
+        })
 	};
 }
 

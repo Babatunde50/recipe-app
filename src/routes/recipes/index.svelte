@@ -3,6 +3,7 @@
     
     import RecipeListItem from '../../components/RecipeListItem.svelte';
     import RecipeDetails from '../../components/RecipeDetails.svelte';
+    import EditRecipe from '../../components/EditRecipe.svelte';
 	import { autoLogin } from '../../helpers/auth'
 
 	onMount(() => {
@@ -10,11 +11,19 @@
 	})
 
     let detailsShown = false;
+    let showEdit = false;
     let recipe;
 
-    function showDetails(event) {
+    const showDetails = (event) => {
         detailsShown = true;
+        showEdit = false;
         recipe = event.detail;
+    }
+
+    const editRecipe = () => {
+        showEdit = true;
+        detailsShown = false;
+        console.log('This is the edit')
     }
     
 </script>
@@ -26,11 +35,15 @@
 
 <div class="row">
     <div class="col-md-5">
-        <RecipeListItem on:showdetails={showDetails} />
+        <RecipeListItem on:newrecipe={editRecipe} on:showdetails={showDetails} />
     </div>
     {#if detailsShown}
         <div class="col-md-7">
             <RecipeDetails {recipe} />
+        </div>
+    {:else if showEdit }
+        <div class="col-md-7">
+            <EditRecipe />
         </div>
     {/if}
 </div>

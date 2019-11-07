@@ -1,20 +1,29 @@
 <script>
-    import ingredientsStore from '../store/ingredients'
+  import ingredientsStore from "../store/ingredients";
 
-    export let ingredient;
+  export let ingredient;
 
-    $: name = ingredient ? ingredient.name : '';
-    $: amount = ingredient ? ingredient.amount : '';
+  $: name = ingredient ? ingredient.name : "";
+  $: amount = ingredient ? ingredient.amount : "";
 
-    const handleSubmit = (event) => {
-        ingredientsStore.addIngredient(name, amount);
-        name = '';
-        amount = '';
-    }
+  $: mode = ingredient ? 'Update' : 'Add';
 
+  const emptyValues = () => {
+    name = null;
+    amount = null;
+  };
 
+  const handleSubmit = () => {
+    ingredientsStore.addIngredient(name, amount);
+    emptyValues();
+  };
+
+  const handleDelete = () => {
+    if (!ingredient) return;
+    ingredientsStore.deleteIngredient(ingredient.id);
+    emptyValues();
+  };
 </script>
-
 
 <div class="row">
   <div class="col-xs-12">
@@ -43,8 +52,21 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <button disabled={!name || !amount }  class="btn btn-success" type="submit">Update</button>
-          <button class="btn btn-danger" type="button">Delete</button>
+          <button
+            disabled={!name || !amount}
+            class="btn btn-success"
+            type="submit">
+            { mode }
+          </button>
+          {#if ingredient}
+          <button
+            class="btn btn-danger"
+            disabled={!name || !amount}
+            on:click={handleDelete}
+            type="button">
+            Delete
+          </button>
+          {/if}
           <button class="btn btn-primary" type="button">clear</button>
         </div>
       </div>
